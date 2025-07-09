@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: travel-agent-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: ./run.sh
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: DEBUG
+        value: "False"

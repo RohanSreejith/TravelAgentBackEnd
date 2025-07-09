@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/dashboard.css">
+{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div class="container">
+        <h1>Welcome, {{ user.username }}</h1>
+        <p>Manage your travel packages and find the best deals for your clients.</p>
+    </div>
+</section>
+
+<section class="dashboard-stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>My Packages</h3>
+                <p>{{ package_count }}</p>
+                <a href="{% url 'packages' %}" class="btn btn-link">View All</a>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Connected Websites</h3>
+                <p>{{ website_count }}</p>
+                <a href="{% url 'profile' %}" class="btn btn-link">Manage</a>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Recent Searches</h3>
+                <p>{{ search_count }}</p>
+                <a href="{% url 'search_packages' %}" class="btn btn-link">Search Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard-actions">
+    <div class="container">
+        <h2>Quick Actions</h2>
+        <div class="actions-grid">
+            <a href="{% url 'add_package' %}" class="action-card">
+                <i class="fas fa-plus-circle"></i>
+                <h3>Create New Package</h3>
+                <p>Design a custom travel package for your clients</p>
+            </a>
+            
+            <a href="{% url 'search_packages' %}" class="action-card">
+                <i class="fas fa-search"></i>
+                <h3>Search Packages</h3>
+                <p>Find the best deals across multiple websites</p>
+            </a>
+            
+            <a href="{% url 'profile' %}" class="action-card">
+                <i class="fas fa-user-cog"></i>
+                <h3>Update Profile</h3>
+                <p>Manage your account and connected websites</p>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

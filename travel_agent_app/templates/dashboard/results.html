@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/dashboard.css">
+{% endblock %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div class="container">
+        <div class="header-flex">
+            <div>
+                <h1>Search Results</h1>
+                <p>Packages for {{ destination }} ({{ duration_days }} days)</p>
+            </div>
+            <a href="{% url 'download_results' %}?destination={{ destination }}&duration_days={{ duration_days }}" class="btn btn-outline">
+                <i class="fas fa-download"></i> Download Results
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="search-results">
+    <div class="container">
+        {% if packages %}
+            <div class="results-grid">
+                {% for package in packages %}
+                    <div class="result-card">
+                        <div class="result-source">
+                            <span class="source-tag">{{ package.source_website.name }}</span>
+                        </div>
+                        <div class="result-image">
+                            <img src="https://source.unsplash.com/random/300x200/?travel,{{ package.destination }}" alt="{{ package.title }}">
+                        </div>
+                        <div class="result-details">
+                            <h3>{{ package.title }}</h3>
+                            <p class="destination"><i class="fas fa-map-marker-alt"></i> {{ package.destination }}</p>
+                            <p class="duration"><i class="fas fa-calendar-alt"></i> {{ package.duration_days }} days</p>
+                            <p class="price">₹{{ package.price }}</p>
+                            <p class="description">{{ package.description|truncatechars:100 }}</p>
+                            <div class="result-actions">
+                                <a href="{{ package.original_url }}" target="_blank" class="btn btn-outline">View on {{ package.source_website.name }}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-search"></i>
+                <h3>No Packages Found</h3>
+                <p>We couldn't find any packages matching your search criteria. Try adjusting your search parameters.</p>
+                <a href="{% url 'search_packages' %}" class="btn btn-primary">Search Again</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
