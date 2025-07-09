@@ -13,3 +13,5 @@ services:
         sync: false
       - key: DEBUG
         value: "False"
+build:
+  pythonVersion: 3.11
