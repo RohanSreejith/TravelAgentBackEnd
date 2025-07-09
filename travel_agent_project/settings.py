@@ -18,8 +18,12 @@ SECRET_KEY = env('SECRET_KEY')
 # Turn off debug for production
 DEBUG = env.bool('DEBUG', default=False)
 
-# Hosts
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+# Hosts (including Render domain)
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[
+    'localhost', 
+    '127.0.0.1', 
+    'travelagentbackend.onrender.com'
+])
 
 # Custom User model
 AUTH_USER_MODEL = 'travel_agent_app.TravelAgent'
@@ -34,14 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'corsheaders',  # Optional: for Streamlit frontend access
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # for serving static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',       # optional
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -88,7 +92,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (Render needs this for collectstatic)
+# Static files
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'travel_agent_app/static')]
@@ -119,5 +123,5 @@ REST_FRAMEWORK = {
     ],
 }
 
-# CORS (optional: only if you're calling the backend from Streamlit)
-CORS_ALLOW_ALL_ORIGINS = True  # You can limit to your frontend domain in production
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = True
