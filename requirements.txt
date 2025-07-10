@@ -11,3 +11,5 @@ gunicorn
 dj-database-url
 whitenoise[brotli]
 django-cors-headers
+cloudinary
+django-cloudinary-storage

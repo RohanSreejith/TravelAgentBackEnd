@@ -79,45 +79,46 @@
                     <p class="lead">{{ package.description }}</p>
                     <hr>
                     <h4 class="mt-4 mb-3">Gallery</h4>
-{% if package.media.all %}
-<div id="mediaCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner rounded shadow">
-    {% for media in package.media.all %}
-      <div class="carousel-item {% if forloop.first %}active{% endif %}">
-        {% if media.media_type == 'image' %}
-          <img src="{{ media.file.url }}" alt="{{ media.caption }}"
-               class="d-block w-100"
-               style="max-height: 520px; object-fit: contain; margin: auto; transition: transform 0.5s ease;"
-               data-bs-toggle="modal" data-bs-target="#imageModal"
-               data-bs-image="{{ media.file.url }}">
-        {% elif media.media_type == 'video' %}
-          <video controls
+{% if package.media.all.exists %}
+  <div id="mediaCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner rounded shadow">
+      {% for media in package.media.all %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          {% if media.media_type|lower == 'image' %}
+            <img src="{{ media.file.url }}" alt="{{ media.caption }}"
                  class="d-block w-100"
-                 style="max-height: 520px; object-fit: contain; margin: auto;">
-            <source src="{{ media.file.url }}">
-            Your browser does not support the video tag.
-          </video>
-        {% endif %}
-        {% if media.caption %}
-          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded px-3 py-2">
-            <small>{{ media.caption }}</small>
-          </div>
-        {% endif %}
-      </div>
-    {% endfor %}
-  </div>
+                 style="max-height: 520px; object-fit: contain; margin: auto; transition: transform 0.5s ease;"
+                 data-bs-toggle="modal" data-bs-target="#imageModal"
+                 data-bs-image="{{ media.file.url }}">
+          {% elif media.media_type|lower == 'video' %}
+            <video controls
+                   class="d-block w-100"
+                   style="max-height: 520px; object-fit: contain; margin: auto;">
+              <source src="{{ media.file.url }}">
+              Your browser does not support the video tag.
+            </video>
+          {% endif %}
+          
+          {% if media.caption %}
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded px-3 py-2">
+              <small>{{ media.caption }}</small>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
 
-  <!-- Smooth, modern arrows -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#mediaCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon custom-arrow" aria-hidden="true"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#mediaCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon custom-arrow" aria-hidden="true"></span>
-  </button>
-</div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#mediaCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon custom-arrow" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#mediaCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon custom-arrow" aria-hidden="true"></span>
+    </button>
+  </div>
 {% else %}
   <p class="text-muted">No media available for this package.</p>
 {% endif %}
+
 
                     
                     
