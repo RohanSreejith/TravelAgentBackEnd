@@ -75,8 +75,11 @@ WSGI_APPLICATION = 'travel_agent_project.wsgi.application'
 
 # Database (Render provides DATABASE_URL)
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    'default': dj_database_url.parse(
+        env('DATABASE_URL'), conn_max_age=600, ssl_require=True
+    )
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
