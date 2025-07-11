@@ -16,12 +16,21 @@ class WebsiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Website
         fields = ['id', 'agent', 'name', 'url', 'is_active', 'created_at']
-
+        
 
 class PackageMediaSerializer(serializers.ModelSerializer):
+    file = serializers.SerializerMethodField()
+
     class Meta:
         model = PackageMedia
-        fields = ['id', 'media_type', 'file']
+        fields = ['media_type', 'file']  # Removed 'id' as you said it's not needed
+
+    def get_file(self, obj):
+        request = self.context.get('request')
+        if request:
+            return request.build_absolute_uri(obj.file.url)
+        return obj.file.url
+
 
 
 class TravelPackageSerializer(serializers.ModelSerializer):
